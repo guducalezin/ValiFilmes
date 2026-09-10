@@ -1,16 +1,5 @@
-const token = "529da9acd613eb56ba170b16e863f9d2";
+const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MjlkYTlhY2Q2MTNlYjU2YmExNzBiMTZlODYzZjlkMiIsIm5iZiI6MTc4OTA0MjUyNi4yMDQsInN1YiI6IjZhYTI5ZjVlZTU1OTZhZWI5NDNjZTFlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2vZGNiyHtjd7sR08RwIulPT_-vEcniVkBFJfRlOU_uM";
 
-fetch("https://api.themoviedb.org/3/movie/popular?language=pt-BR", {
-    method: "GET",
-    headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${token}`
-    }
-})
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-})
-.catch(error => {
-    console.error("Erro:", error);
-});
+const fetchFilme = async (filme) => {
+
+}
