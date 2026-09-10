@@ -21,7 +21,7 @@
   <body class="bg-dark">
     <nav class="navbar navbar-expand-lg bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand text-danger mx-auto" href="#">VALIFILMES</a>
+        <a class="navbar-brand text-white" href="#">VALIFILMES</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -37,7 +37,7 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
           <form class="d-flex" role="search">
             <input
-              class="form-control me-2 bg-dark-subtle"
+              class="form-control me-2 bg-white"
               type="search"
               placeholder="Pesquisar"
               aria-label="Search"
@@ -59,25 +59,81 @@
             </button>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link text-danger" href="#">Favoritos</a>
+                <a class="nav-link text-white" href="#">Favoritos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-danger" href="#">Atividade</a>
+                <a class="nav-link text-white" href="#">Atividade</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-danger" href="#">Perfil</a>
+                <a class="nav-link text-white" href="#">Perfil</a>
               </li>
             </ul>
           </form>
         </div>
       </div>
     </nav>
-    <hr style="color: gray;">
+    <hr class="border border-danger border-2 opacity-100 m-0" />
     <div class="container-XXL bg-dark">
+      <div class="d-flex flex-column mb-3">
+        <h5 class="text-danger">Em Alta</h5>
         <div class="d-flex">
-            <p class="text-danger">Em Alta</p>
+          <div class="em-alta card-group">
+            <div class="card">
+              <img src="..." class="img-filme card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="nome-filme card-title"></h5>
+                <p class="desc-filme card-text"></p>
+                <p class="aval-filme card-text"></p>
+              </div>
+            </div>
+            <div class="card">
+              <img src="..." class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="nome-filme card-title"></h5>
+                <p class="desc-filme card-text"></p>
+                <p class="aval-filme card-text"></p>
+              </div>
+            </div>
+            <div class="card">
+              <img src="..." class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="nome-filme card-title"></h5>
+                <p class="desc-filme card-text"></p>
+                <p class="aval-filme card-text"></p>
+              </div>
+            </div>
+          </div>
         </div>
-
+        <div class="d-flex"></div>
+          <h5 class="text-danger">Novos</h5>
+          <div class="novos card-group">
+            <div class="card">
+              <img src="..." class="img-filme card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="nome-filme card-title"></h5>
+                <p class="desc-filme card-text"></p>
+                <p class="aval-filme card-text"></p>
+              </div>
+            </div>
+            <div class="card">
+              <img src="..." class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="nome-filme card-title"></h5>
+                <p class="desc-filme card-text"></p>
+                <p class="aval-filme card-text"></p>
+              </div>
+            </div>
+            <div class="card">
+              <img src="..." class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="nome-filme card-title"></h5>
+                <p class="desc-filme card-text"></p>
+                <p class="aval-filme card-text"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>

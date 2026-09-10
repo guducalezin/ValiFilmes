@@ -1,4 +1,4 @@
-const token = "SEU_TOKEN_AQUI";
+const token = "529da9acd613eb56ba170b16e863f9d2";
 
 fetch("https://api.themoviedb.org/3/movie/popular?language=pt-BR", {
     method: "GET",
