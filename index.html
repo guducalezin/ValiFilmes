@@ -20,7 +20,8 @@
   </head>
   <body class="bg-dark">
     <nav class="navbar navbar-expand-lg bg-dark">
-      <div class="container-fluid">
+      <div class="ps-0 container-fluid">
+        <img src="assets/logo.png" alt="Logo" class="logo">
         <a class="navbar-brand text-white" href="#">VALIFILMES</a>
         <button
           class="navbar-toggler"
@@ -33,9 +34,8 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-          <form class="d-flex" role="search">
+        
+          <form class="d-flex mx-auto search-bar" role="search">
             <input
               class="form-control me-2 bg-white"
               type="search"
@@ -57,81 +57,53 @@
               </svg>
               Pesquisar
             </button>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Favoritos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Atividade</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Perfil</a>
-              </li>
-            </ul>
           </form>
-        </div>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">Favoritos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">Atividade</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">Perfil</a>
+            </li>
+          </ul>
+        
       </div>
     </nav>
     <hr class="border border-danger border-2 opacity-100 m-0" />
     <div class="container-XXL bg-dark">
       <div class="d-flex flex-column mb-3">
-        <h5 class="text-danger">Em Alta</h5>
-        <div class="d-flex">
-          <div class="em-alta card-group">
-            <div class="card">
-              <img src="..." class="img-filme card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="nome-filme card-title"></h5>
-                <p class="desc-filme card-text"></p>
-                <p class="aval-filme card-text"></p>
-              </div>
-            </div>
-            <div class="card">
-              <img src="..." class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="nome-filme card-title"></h5>
-                <p class="desc-filme card-text"></p>
-                <p class="aval-filme card-text"></p>
-              </div>
-            </div>
-            <div class="card">
-              <img src="..." class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="nome-filme card-title"></h5>
-                <p class="desc-filme card-text"></p>
-                <p class="aval-filme card-text"></p>
-              </div>
-            </div>
-          </div>
+        <h5 class="section-title text-danger">
+          Em Alta
+        </h5>
+        <div class="movie-row-wrapper">
+          <button class="nav-btn left-btn emAlta-left" aria-label="Scroll Left">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+            </svg>
+          </button>
+          <div id="emAlta" class="movie-row" aria-live="polite"></div>
+          <button class="nav-btn right-btn emAlta-right" aria-label="Scroll Right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
+            </svg>
+          </button>
         </div>
-        <div class="d-flex"></div>
-          <h5 class="text-danger">Novos</h5>
-          <div class="novos card-group">
-            <div class="card">
-              <img src="..." class="img-filme card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="nome-filme card-title"></h5>
-                <p class="desc-filme card-text"></p>
-                <p class="aval-filme card-text"></p>
-              </div>
-            </div>
-            <div class="card">
-              <img src="..." class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="nome-filme card-title"></h5>
-                <p class="desc-filme card-text"></p>
-                <p class="aval-filme card-text"></p>
-              </div>
-            </div>
-            <div class="card">
-              <img src="..." class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="nome-filme card-title"></h5>
-                <p class="desc-filme card-text"></p>
-                <p class="aval-filme card-text"></p>
-              </div>
-            </div>
-          </div>
+        
+        <div class="movie-row-wrapper">
+          <button class="nav-btn left-btn novos-left" aria-label="Scroll Left">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+            </svg>
+          </button>
+          <div id="novos" class="movie-row" aria-live="polite"></div>
+          <button class="nav-btn right-btn novos-right" aria-label="Scroll Right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
