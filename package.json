@@ -1,0 +1,13 @@
+{
+  "name": "valifilmes",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Comunidade para descobrir e avaliar filmes.",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}
