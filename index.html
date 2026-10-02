@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Descubra filmes, compartilhe suas avaliações e organize seus favoritos no ValiFilmes."
+    />
     <title>ValiFilmes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link
@@ -18,96 +22,65 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="bg-dark">
-    <nav class="navbar navbar-expand-lg bg-dark">
-      <div class="ps-0 container-fluid">
-        <img src="assets/logo.png" alt="Logo" class="logo">
-        <a class="navbar-brand text-white" href="#">VALIFILMES</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        
-          <form class="d-flex mx-auto search-bar" role="search">
-            <input
-              class="form-control me-2 bg-white"
-              type="search"
-              placeholder="Pesquisar"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-search"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
-                />
-              </svg>
-              Pesquisar
-            </button>
-          </form>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Favoritos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Atividade</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Perfil</a>
-            </li>
-          </ul>
-        
-      </div>
-    </nav>
-    <hr class="border border-danger border-2 opacity-100 m-0" />
-    <div class="container-XXL bg-dark">
-      <div class="d-flex flex-column mb-3">
-        <h5 class="section-title text-danger">
-          Em Alta
-        </h5>
-        <div class="movie-row-wrapper">
-          <button class="nav-btn left-btn emAlta-left" aria-label="Scroll Left">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
-            </svg>
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-lg" aria-label="Navegação principal">
+        <div class="container-fluid site-nav">
+          <a class="brand" href="#home" aria-label="ValiFilmes — início">
+            <img src="assets/logo.png" alt="" class="logo" />
+            <span>VALI<span class="brand-accent">FILMES</span></span>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavigation"
+            aria-controls="mainNavigation"
+            aria-expanded="false"
+            aria-label="Abrir menu"
+          >
+            <span class="navbar-toggler-icon"></span>
           </button>
-          <div id="emAlta" class="movie-row" aria-live="polite"></div>
-          <button class="nav-btn right-btn emAlta-right" aria-label="Scroll Right">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
-            </svg>
-          </button>
+          <div class="collapse navbar-collapse" id="mainNavigation">
+            <form class="search-bar" id="navSearchForm" role="search">
+              <label class="visually-hidden" for="navSearchInput">Pesquisar filmes</label>
+              <input
+                id="navSearchInput"
+                name="query"
+                class="form-control"
+                type="search"
+                placeholder="Busque por um filme..."
+                autocomplete="off"
+              />
+              <button class="search-submit" type="submit" aria-label="Pesquisar">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                  <path d="m16 16 5 5"></path>
+                </svg>
+                <span>Pesquisar</span>
+              </button>
+            </form>
+            <div class="nav-links">
+              <a class="nav-link" href="#favorites" data-route-link="favorites">
+                <span class="nav-icon" aria-hidden="true">♥</span> Favoritos
+              </a>
+              <a class="nav-link" href="#activity" data-route-link="activity">
+                <span class="nav-icon" aria-hidden="true">◷</span> Atividade
+              </a>
+              <a class="nav-link" href="#profile" data-route-link="profile">
+                <span class="nav-icon" aria-hidden="true">◎</span> Perfil
+              </a>
+              <a class="nav-link" href="#settings" data-route-link="settings">
+                <span class="nav-icon" aria-hidden="true">⚙</span> Configurações
+              </a>
+              <button class="nav-link logout-link" type="button" data-action="logout">Sair</button>
+            </div>
+          </div>
         </div>
-        
-        <div class="movie-row-wrapper">
-          <button class="nav-btn left-btn novos-left" aria-label="Scroll Left">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
-            </svg>
-          </button>
-          <div id="novos" class="movie-row" aria-live="polite"></div>
-          <button class="nav-btn right-btn novos-right" aria-label="Scroll Right">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
+      </nav>
+    </header>
+    <main id="app" class="page-shell" tabindex="-1"></main>
+    <div id="toastRegion" class="toast-region" aria-live="polite"></div>
     <script src="script.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
