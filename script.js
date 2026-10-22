@@ -151,6 +151,17 @@ function cartaoFilme(filme) {
   `;
 }
 
+function placeholderFavorito() {
+  return `
+    <article class="placeholder-favorito">
+      <div class="placeholder-favorito-icone">+</div>
+      <h3>Espaço para um favorito</h3>
+      <p>Escolha um filme na busca para adicioná-lo aqui.</p>
+      <a class="botao" href="#search">Buscar filmes</a>
+    </article>
+  `;
+}
+
 function mensagemErro(texto) {
   return `<div class="vazio"><h2>Não foi possível carregar</h2><p>${escapar(texto)}</p><button class="botao" data-action="recarregar">Tentar novamente</button></div>`;
 }
@@ -242,9 +253,13 @@ function renderAvaliacoesCurtas() {
 
 function renderFavoritos() {
   const lista = favoritos();
+  const placeholders = Array.from({ length: Math.max(0, 4 - lista.length) }, () => placeholderFavorito()).join("");
   app.innerHTML = `
     ${cabecalho("Favoritos", "Até quatro filmes que você quer guardar.")}
-    <section class="secao"><div class="lista-filmes">${lista.length ? lista.map(cartaoFilme).join("") : `<div class="vazio"><h2>Sua lista está vazia</h2><p>Adicione filmes pela busca.</p><a class="botao" href="#search">Buscar filmes</a></div>`}</div></section>
+    <section class="secao favoritos-secao">
+      <div class="favoritos-aviso">${lista.length ? `${lista.length} de 4 espaços ocupados.` : "Sua lista está vazia. Adicione filmes pela busca."}</div>
+      <div class="lista-filmes favoritos-grid">${lista.map(cartaoFilme).join("")}${placeholders}</div>
+    </section>
   `;
 }
 
