@@ -219,11 +219,11 @@ main {
 
 .favoritos-grid .filme,
 .placeholder-favorito {
-  min-height: 440px;
+  min-height: 570px;
 }
 
 .favoritos-grid .filme > img {
-  height: 360px;
+  height: 440px;
 }
 
 .placeholder-favorito {
@@ -320,6 +320,8 @@ main {
 }
 
 .filme {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--borda);
   border-radius: 6px;
@@ -336,12 +338,15 @@ main {
 .filme > img {
   display: block;
   width: 100%;
-  height: 320px;
+  height: 400px;
   object-fit: contain;
-  background: #ddd;
+  background: var(--caixa-2);
 }
 
 .filme-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: 12px;
 }
 
@@ -359,6 +364,7 @@ main {
 
 .acoes-filme {
   display: flex;
+  margin-top: auto;
   gap: 5px;
 }
 
@@ -631,6 +637,6 @@ body[data-tema="escuro"] .inicio {
   }
 
   .favoritos-grid .filme > img {
-    height: 300px;
+    height: 360px;
   }
 }
