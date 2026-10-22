@@ -223,7 +223,7 @@ main {
 }
 
 .favoritos-grid .filme > img {
-  height: 300px;
+  height: 360px;
 }
 
 .placeholder-favorito {
@@ -336,8 +336,8 @@ main {
 .filme > img {
   display: block;
   width: 100%;
-  height: 250px;
-  object-fit: cover;
+  height: 320px;
+  object-fit: contain;
   background: #ddd;
 }
 
@@ -631,6 +631,6 @@ body[data-tema="escuro"] .inicio {
   }
 
   .favoritos-grid .filme > img {
-    height: 260px;
+    height: 300px;
   }
 }
