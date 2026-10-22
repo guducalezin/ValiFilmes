@@ -1,44 +1,68 @@
 const API_URL = "https://api.themoviedb.org/3";
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-const KEY_STORAGE = "valifilmes-api-key";
-const DATA_STORAGE = "valifilmes-dados";
+const STORAGE_API = "api.php";
 
 const app = document.querySelector("#app");
 let filmes = [];
 let filmeParaAvaliar = null;
 let notaSelecionada = 0;
-let dados = carregarDados();
+let modoCadastro = false;
+let dados = dadosPadrao();
 
-function carregarDados() {
-  const padrao = {
+function dadosPadrao() {
+  return {
     favoritos: [],
     avaliacoes: [],
     catalogo: [],
     perfil: { nome: "Visitante", bio: "Gosto de assistir filmes." },
-    tema: "escuro"
+    tema: "escuro",
+    visualAtualizado: true,
+    apiKey: ""
   };
-  try {
-    const salvo = JSON.parse(localStorage.getItem(DATA_STORAGE));
-    return {
-      ...padrao,
-      ...salvo,
-      perfil: { ...padrao.perfil, ...(salvo && salvo.perfil) },
-      catalogo: Array.isArray(salvo && salvo.catalogo) ? salvo.catalogo : [],
-      tema: salvo && salvo.visualAtualizado ? salvo.tema : "escuro",
-      visualAtualizado: true
-    };
-  } catch (erro) {
-    console.error("Não foi possível ler os dados salvos.", erro);
-    return padrao;
-  }
 }
 
-function salvarDados() {
-  localStorage.setItem(DATA_STORAGE, JSON.stringify(dados));
+async function carregarDados() {
+  const resposta = await fetch(STORAGE_API);
+  if (!resposta.ok) throw new Error("Não foi possível carregar os dados da sessão.");
+  const salvo = await resposta.json();
+  if (!salvo.authenticated) {
+    dados = dadosPadrao();
+    return;
+  }
+  const padrao = dadosPadrao();
+  dados = {
+    ...padrao,
+    ...salvo,
+    perfil: { ...padrao.perfil, ...(salvo && salvo.perfil) },
+    catalogo: Array.isArray(salvo && salvo.catalogo) ? salvo.catalogo : [],
+    favoritos: Array.isArray(salvo && salvo.favoritos) ? salvo.favoritos : [],
+    avaliacoes: Array.isArray(salvo && salvo.avaliacoes) ? salvo.avaliacoes : [],
+    tema: salvo && salvo.visualAtualizado ? salvo.tema : "escuro",
+    apiKey: typeof (salvo && salvo.apiKey) === "string" ? salvo.apiKey : "",
+    visualAtualizado: true
+  };
+}
+
+async function salvarDados() {
+  const resposta = await fetch(STORAGE_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "save", data: dados })
+  });
+  if (!resposta.ok) throw new Error("Não foi possível salvar os dados da sessão.");
+}
+
+async function limparChaveApi() {
+  const resposta = await fetch(STORAGE_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "logout" })
+  });
+  if (!resposta.ok) throw new Error("Não foi possível remover a chave da API.");
 }
 
 function chaveApi() {
-  return localStorage.getItem(KEY_STORAGE) || "";
+  return dados.apiKey || "";
 }
 
 function escapar(texto) {
@@ -62,11 +86,11 @@ function converterFilme(item) {
   };
 }
 
-function guardarFilmes(lista) {
+async function guardarFilmes(lista) {
   const existentes = new Map(dados.catalogo.map((filme) => [filme.id, filme]));
   lista.forEach((filme) => existentes.set(filme.id, filme));
   dados.catalogo = [...existentes.values()];
-  salvarDados();
+  await salvarDados();
 }
 
 async function consultarApi(endereco, parametros = {}) {
@@ -143,13 +167,18 @@ function renderLogin(mensagem = "") {
     <section class="login">
       <img src="assets/logo.png" alt="">
       <p>VALIFILMES</p>
-      <h1>Entrar no catálogo</h1>
-      <p>Informe somente sua API Key v3 do TMDB para carregar os filmes.</p>
+      <h1>${modoCadastro ? "Criar sua conta" : "Entrar no catálogo"}</h1>
+      <p>${modoCadastro ? "Cadastre usuário, senha e sua API Key v3 do TMDB." : "Informe usuário, senha e API Key v3 do TMDB."}</p>
       <form id="loginForm" class="formulario-box">
+        <label for="username">Usuário</label>
+        <input id="username" name="username" type="text" minlength="3" maxlength="32" autocomplete="username" required>
+        <label for="password">Senha</label>
+        <input id="password" name="password" type="password" minlength="6" autocomplete="${modoCadastro ? "new-password" : "current-password"}" required>
         <label for="apiKey">API Key do TMDB</label>
         <input id="apiKey" name="apiKey" type="password" placeholder="Cole sua API Key v3" required>
-        <button class="botao" type="submit">Entrar</button>
+        <button class="botao" type="submit">${modoCadastro ? "Cadastrar" : "Entrar"}</button>
         <small>Você encontra a chave em themoviedb.org/settings/api.</small>
+        <button class="link-login" type="button" data-action="alternar-login">${modoCadastro ? "Já tenho uma conta" : "Criar uma conta"}</button>
         <strong class="erro">${escapar(mensagem)}</strong>
       </form>
     </section>
@@ -189,7 +218,7 @@ async function renderHome() {
     const filmesPopulares = populares.results.map(converterFilme);
     const filmesNovos = novos.results.map(converterFilme);
     filmes = [...filmesPopulares, ...filmesNovos];
-    guardarFilmes(filmes);
+    await guardarFilmes(filmes);
     const areaPopulares = document.querySelector("#popularMovies");
     const areaNovos = document.querySelector("#newMovies");
     if (areaPopulares) areaPopulares.innerHTML = filmesPopulares.map(cartaoFilme).join("");
@@ -239,7 +268,7 @@ async function renderBusca(query = "") {
   try {
     const resultado = await consultarApi("/search/movie", { query, page: 1, include_adult: "false" });
     filmes = resultado.results.map(converterFilme);
-    guardarFilmes(filmes);
+    await guardarFilmes(filmes);
     const area = document.querySelector("#searchResults");
     if (area) area.innerHTML = filmes.length ? filmes.map(cartaoFilme).join("") : "<p>Nenhum filme encontrado.</p>";
   } catch (erro) {
@@ -309,7 +338,7 @@ async function rota() {
       try {
         const resultado = await consultarApi("/movie/popular", { page: 1 });
         filmes = resultado.results.map(converterFilme);
-        guardarFilmes(filmes);
+        await guardarFilmes(filmes);
         renderReview();
       } catch (erro) {
         app.innerHTML = mensagemErro(erro.message);
@@ -321,7 +350,7 @@ async function rota() {
   else renderHome();
 }
 
-document.addEventListener("click", (event) => {
+document.addEventListener("click", async (event) => {
   const botao = event.target.closest("[data-action]");
   if (!botao) return;
   const acao = botao.dataset.action;
@@ -338,7 +367,7 @@ document.addEventListener("click", (event) => {
       mostrar("Você pode ter no máximo 4 favoritos.");
       return;
     }
-    salvarDados();
+    await salvarDados();
     rota();
   }
 
@@ -362,7 +391,7 @@ document.addEventListener("click", (event) => {
     }
     dados.avaliacoes = dados.avaliacoes.filter((item) => item.filme.id !== filme.id);
     dados.avaliacoes.unshift({ filme, nota: notaSelecionada, texto });
-    salvarDados();
+    await salvarDados();
     filmeParaAvaliar = null;
     notaSelecionada = 0;
     location.hash = "#activity";
@@ -372,23 +401,29 @@ document.addEventListener("click", (event) => {
   if (acao === "salvar-perfil") {
     dados.perfil.nome = document.querySelector("#profileName").value.trim() || "Visitante";
     dados.perfil.bio = document.querySelector("#profileBio").value.trim();
-    salvarDados();
+    await salvarDados();
     rota();
     mostrar("Perfil salvo.");
   }
 
   if (acao === "salvar-tema") {
     dados.tema = document.querySelector("#theme").value;
-    salvarDados();
+    await salvarDados();
     rota();
     mostrar("Tema alterado.");
   }
 
   if (acao === "sair") {
-    localStorage.removeItem(KEY_STORAGE);
+    await limparChaveApi();
+    dados.apiKey = "";
     filmes = [];
     location.hash = "";
     rota();
+  }
+
+  if (acao === "alternar-login") {
+    modoCadastro = !modoCadastro;
+    renderLogin();
   }
 
   if (acao === "recarregar") rota();
@@ -409,13 +444,28 @@ document.addEventListener("submit", async (event) => {
   const form = event.target;
 
   if (form.id === "loginForm") {
-    const chave = new FormData(form).get("apiKey").trim();
+    const formulario = new FormData(form);
+    const username = formulario.get("username").trim();
+    const password = formulario.get("password");
+    const chave = formulario.get("apiKey").trim();
     const botao = form.querySelector("button");
     botao.disabled = true;
-    botao.textContent = "Validando...";
+    botao.textContent = modoCadastro ? "Cadastrando..." : "Entrando...";
     try {
       await validarChave(chave);
-      localStorage.setItem(KEY_STORAGE, chave);
+      const resposta = await fetch(STORAGE_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: modoCadastro ? "register" : "login",
+          username,
+          password,
+          apiKey: chave
+        })
+      });
+      const resultado = await resposta.json().catch(() => ({}));
+      if (!resposta.ok) throw new Error(resultado.error || "Não foi possível autenticar.");
+      await carregarDados();
       location.hash = "#home";
       rota();
     } catch (erro) {
@@ -429,4 +479,12 @@ document.addEventListener("submit", async (event) => {
 });
 
 window.addEventListener("hashchange", rota);
-rota();
+
+(async function iniciar() {
+  try {
+    await carregarDados();
+    await rota();
+  } catch (erro) {
+    app.innerHTML = mensagemErro(erro.message);
+  }
+})();
