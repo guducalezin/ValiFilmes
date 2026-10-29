@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Um catálogo simples para descobrir e avaliar filmes.">
+    <title>ValiFilmes</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="topo">
+      <a class="logo-link" href="#home">
+        <img src="assets/logo.png" alt="">
+        <strong>VALI<span>FILMES</span></strong>
+      </a>
+
+      <form id="navSearchForm" class="busca-topo">
+        <input id="navSearchInput" name="query" type="search" placeholder="Buscar filme">
+        <button type="submit">Buscar</button>
+      </form>
+
+      <nav>
+        <a href="#home">Início</a>
+        <a href="#favorites">Favoritos</a>
+        <a href="#activity">Atividade</a>
+        <a href="#profile">Perfil</a>
+        <a href="#settings">Configurações</a>
+      </nav>
+    </header>
+
+    <main id="app"></main>
+    <div id="toastRegion" class="toast"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
